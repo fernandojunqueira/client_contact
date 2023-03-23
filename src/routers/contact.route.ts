@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createContactController, listClientController, listContactController, retrieverContactController } from "../controllers/controllers";
+import { createContactController, deleteContactController, listClientController, listContactController, retrieverContactController, updateContactController } from "../controllers/controllers";
 import ensureDataIsValidMiddleware from "../middlewares/ensureValidatedDate";
 import {contactSchema} from "../serializers/serializers"
 import { inspectTokenMiddlewares } from "../middlewares/inspectToken";
@@ -10,5 +10,7 @@ const contactRoutes = Router()
 contactRoutes.post("/:id",inspectTokenMiddlewares,verifyOwnerMiddlewares,ensureDataIsValidMiddleware(contactSchema),createContactController)
 contactRoutes.get("/",inspectTokenMiddlewares,listContactController)
 contactRoutes.get("/:id",inspectTokenMiddlewares,retrieverContactController)
+contactRoutes.patch("/:id",inspectTokenMiddlewares,updateContactController)
+contactRoutes.delete("/:id",inspectTokenMiddlewares,deleteContactController)
 
 export default contactRoutes

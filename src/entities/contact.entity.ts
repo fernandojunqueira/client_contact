@@ -22,7 +22,7 @@ export class Contact{
     @CreateDateColumn()
     registrationDate: Date
 
-    @ManyToOne(() => Client, (client) => client.contacts)
+    @ManyToOne(() => Client, (client) => client.contacts,{onDelete:"CASCADE"})
     client: Client
 
 }
