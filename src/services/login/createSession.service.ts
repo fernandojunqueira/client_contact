@@ -5,20 +5,19 @@ import "dotenv/config"
 import { AppDataSource } from "../../data-source"
 import { Client } from "../../entities/client.entity"
 import { IClientSession } from "../../interface"
+import AppError from "../../errors/AppError"
 
 const createSessionService = async ({email,password}:IClientSession):Promise<string> => {
     const clientRepo = AppDataSource.getRepository(Client)
     const client = await clientRepo.findOneBy({email: email})
     
     if(!client){
-        // throw new AppError('Wrong email/password', 403)
-        return 'Wrong email/password'
+        throw new AppError('Wrong email/password', 403)
     }
     const passwordMatch = await compare(password,client.password)
 
     if(!passwordMatch){
-        // throw new AppError('Wrong email/password', 403)
-        return 'Wrong email/password'
+        throw new AppError('Wrong email/password', 403)
     }
    
     const token = jwt.sign(
