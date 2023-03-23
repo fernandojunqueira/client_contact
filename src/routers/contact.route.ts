@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createContactController, deleteContactController, listClientController, listContactController, retrieverContactController, updateContactController } from "../controllers/controllers";
+import { createContactController, deleteContactController, listContactController, retrieverContactController, updateContactController } from "../controllers/contact";
 import ensureDataIsValidMiddleware from "../middlewares/ensureValidatedDate";
 import {contactSchema} from "../serializers/serializers"
 import { inspectTokenMiddlewares } from "../middlewares/inspectToken";

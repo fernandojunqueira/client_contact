@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createSessionController } from "../controllers/controllers";
+import { createSessionController } from "../controllers/session";
 import { sessionSchema } from "../serializers/serializers";
 import ensureDataIsValidMiddleware from "../middlewares/ensureValidatedDate";
 

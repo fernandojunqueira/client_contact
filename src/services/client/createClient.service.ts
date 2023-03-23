@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../data-source"
 import { Client } from "../../entities/client.entity"
 import AppError from "../../errors/AppError"
-import { IClientRequest, IClientResponseCreate } from "../../interface"
+import { IClientRequest, IClientResponseCreate } from "../../interface/client"
 import { clienteSchemaResponseCreate } from "../../serializers/serializers"
 
 const createClientService = async (payload:IClientRequest):Promise<IClientResponseCreate> => {

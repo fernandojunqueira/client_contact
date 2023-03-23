@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../data-source"
 import { Contact } from "../../entities/contact.entity"
 import AppError from "../../errors/AppError"
-import { IContactResponse, IContactUpdate } from "../../interface"
+import { IContactResponse, IContactUpdate } from "../../interface/contact"
 import { contactSchemaResponse } from "../../serializers/serializers"
 
 export const updateContactService = async (contactId:string, dataToBeUpdated:IContactUpdate):Promise<IContactResponse> => {

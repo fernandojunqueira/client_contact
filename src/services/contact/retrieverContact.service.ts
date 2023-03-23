@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../data-source"
 import { Contact } from "../../entities/contact.entity"
 import AppError from "../../errors/AppError"
-import { IContactResponse } from "../../interface"
+import { IContactResponse } from "../../interface/contact"
 import { contactSchemaResponse } from "../../serializers/serializers"
 
 export const retrieverContactService = async (contactId:string):Promise<IContactResponse> => {

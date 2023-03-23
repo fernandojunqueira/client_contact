@@ -1,7 +1,8 @@
 import { AppDataSource } from "../../data-source"
 import { Client } from "../../entities/client.entity"
 import AppError from "../../errors/AppError"
-import { IClientResponseCreate, IContactUpdate } from "../../interface"
+import { IClientResponseCreate } from "../../interface/client"
+import { IContactUpdate } from "../../interface/contact"
 import { clienteSchemaResponseCreate } from "../../serializers/serializers"
 
 export const updateClientService = async (clientId:string, dataToBeUpdated:IContactUpdate):Promise<IClientResponseCreate> => {

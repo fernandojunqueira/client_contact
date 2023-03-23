@@ -1,3 +1,6 @@
+import { IContactResponse } from "../contact"
+
+
 export interface IClientRequest{
     firstName: string
     lastName: string
@@ -23,32 +26,4 @@ export interface IClientResponseCreate{
     phone: string
     email: string
     registrationDate: Date
-}
-
-export interface IContactRequest{
-    firstName: string
-    lastName: string
-    phone: string
-    email: string
-}
-
-export interface IContactUpdate{
-    firstName?: string
-    lastName?: string
-    phone?: string
-    email?: string
-}
-
-export interface IContactResponse{
-    id: string
-    firstName: string
-    lastName: string
-    phone: string
-    email: string
-    registrationDate: Date
-}
-
-export interface IClientSession{
-    email: string
-    password: string
 }

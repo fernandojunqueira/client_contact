@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken"
 import "dotenv/config"
 import { AppDataSource } from "../../data-source"
 import { Client } from "../../entities/client.entity"
-import { IClientSession } from "../../interface"
 import AppError from "../../errors/AppError"
+import { IClientSession } from "../../interface/session"
 
 const createSessionService = async ({email,password}:IClientSession):Promise<string> => {
     const clientRepo = AppDataSource.getRepository(Client)

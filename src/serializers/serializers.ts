@@ -1,6 +1,9 @@
 import * as yup from "yup"
 import { Schema} from "yup"
-import { IClientRequest, IClientResponse, IClientResponseCreate, IClientSession, IContactRequest, IContactResponse } from "../interface"
+import { IContactRequest, IContactResponse } from "../interface/contact"
+import { IClientRequest, IClientResponse, IClientResponseCreate } from "../interface/client"
+import { IClientSession } from "../interface/session"
+
 
 export const contactSchemaResponse: Schema<IContactResponse> = yup.object().shape({
     id:yup.string().required(),

@@ -1,6 +1,6 @@
 import { AppDataSource } from "../../data-source"
 import { Contact } from "../../entities/contact.entity"
-import { IContactResponse } from "../../interface"
+import { IContactResponse } from "../../interface/contact"
 import { listContact } from "../../serializers/serializers"
 
 export const listContactService = async ():Promise<IContactResponse[] | undefined> => {
