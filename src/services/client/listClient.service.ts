@@ -4,7 +4,11 @@ import { listClient } from "../../serializers/serializers"
 
 export const listClientService =async () => {
     const clientRepo = AppDataSource.getRepository(Client)
-    const clients = await clientRepo.find()
+    const clients = await clientRepo.find({
+        relations: {
+            contacts:true
+        }
+    })
 
     const clientsResponse = await listClient.validate(clients,{stripUnknown:true})
 

@@ -13,6 +13,7 @@ export interface IClientResponse{
     phone: string
     email: string
     registrationDate: Date
+    contacts: IContactResponse[] | undefined
 }
 
 export interface IContactRequest{
@@ -23,14 +24,15 @@ export interface IContactRequest{
 }
 
 export interface IContactResponse{
+    id: string
     firstName: string
     lastName: string
     phone: string
     email: string
+    registrationDate: Date
 }
 
 export interface IClientSession{
     email: string
     password: string
-
 }
