@@ -10,6 +10,7 @@ import createSessionService from "../services/login/createSession.service"
 import { updateContactService } from "../services/contact/updateContact.service"
 import { deleteContactService } from "../services/contact/deleteContact.service"
 import { deleteClientService } from "../services/client/deleteClient.service"
+import { updateClientService } from "../services/client/updateClient.service"
 
 export const createClientController = async (req: Request, res: Response) => {
     const body:IClientRequest = req.body
@@ -33,6 +34,14 @@ export const deleteClientController =async (req:Request,res:Response) => {
     const clients = await deleteClientService(clientId)
     return res.status(204).json(clients)
 }
+
+export const updateClientController =async (req:Request,res:Response) => {
+    const clientId:string = req.params.id
+    const dataToBeUpdated:IContactUpdate = req.body
+    const contacts = await updateClientService(clientId, dataToBeUpdated)
+    return res.status(200).json(contacts)
+}
+
 
 export const createContactController = async (req: Request, res: Response) => {
     const body:IContactRequest = req.body

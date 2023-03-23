@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createClientController, deleteClientController, listClientController, retrieverClientController } from "../controllers/controllers";
+import { createClientController, deleteClientController, listClientController, retrieverClientController, updateClientController } from "../controllers/controllers";
 import ensureDataIsValidMiddleware from "../middlewares/ensureValidatedDate";
 import { clientSchema } from "../serializers/serializers";
 import { inspectTokenMiddlewares } from "../middlewares/inspectToken";
@@ -22,6 +22,12 @@ clientRoutes.get(
     inspectTokenMiddlewares,
     verifyOwnerMiddlewares,
     retrieverClientController
+    )
+clientRoutes.patch(
+    "/:id",
+    inspectTokenMiddlewares,
+    verifyOwnerMiddlewares,
+    updateClientController
     )
 clientRoutes.delete(
     "/:id",
