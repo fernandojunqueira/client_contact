@@ -1,5 +1,5 @@
 import { Response , Request } from "express"
-import { IClientRequest, IClientSession, IContactRequest } from "../interface"
+import { IClientRequest, IClientSession, IContactRequest, IContactUpdate } from "../interface"
 import createClientService from "../services/client/createClient.service"
 import createContactService from "../services/contact/createContact.service"
 import { listClientService } from "../services/client/listClient.service"
@@ -7,7 +7,6 @@ import { retrieverClientService } from "../services/client/retrieverClient.servi
 import { listContactService } from "../services/contact/listContact.service"
 import { retrieverContactService } from "../services/contact/retrieverContact.service"
 import createSessionService from "../services/login/createSession.service"
-import { listContactsIdClientService } from "../services/client/listContactsIdClient.service"
 import { updateContactService } from "../services/contact/updateContact.service"
 import { deleteContactService } from "../services/contact/deleteContact.service"
 import { deleteClientService } from "../services/client/deleteClient.service"
@@ -59,15 +58,9 @@ export const createSessionController = async (req:Request,res:Response) => {
     return res.json({token})
 }
 
-export const listContactsIdClientController =async (req:Request,res:Response) => {
-    const contactId:string = req.params.id
-    const contacts = await listContactsIdClientService(contactId)
-    return res.status(200).json(contacts)
-}
-
 export const updateContactController =async (req:Request,res:Response) => {
     const contactId:string = req.params.id
-    const dataToBeUpdated:any = req.body
+    const dataToBeUpdated:IContactUpdate = req.body
     const contacts = await updateContactService(contactId, dataToBeUpdated)
     return res.status(200).json(contacts)
 }

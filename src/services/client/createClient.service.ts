@@ -1,10 +1,10 @@
 import { AppDataSource } from "../../data-source"
 import { Client } from "../../entities/client.entity"
 import AppError from "../../errors/AppError"
-import { IClientRequest } from "../../interface"
+import { IClientRequest, IClientResponseCreate } from "../../interface"
 import { clienteSchemaResponseCreate } from "../../serializers/serializers"
 
-const createClientService = async (payload:IClientRequest) => {
+const createClientService = async (payload:IClientRequest):Promise<IClientResponseCreate> => {
    const clientRepo = AppDataSource.getRepository(Client)
   
    const clientVerify = await clientRepo.findOneBy({email: payload.email})

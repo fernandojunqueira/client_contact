@@ -1,9 +1,11 @@
 import { AppDataSource } from "../../data-source"
 import { Client } from "../../entities/client.entity"
 import AppError from "../../errors/AppError"
+import { IClientResponse } from "../../interface"
 import { clienteSchemaWithoutPassword } from "../../serializers/serializers"
 
-export const retrieverClientService =async (clientId:string) => {
+export const retrieverClientService = async (clientId:string):Promise<IClientResponse> => {
+    console.log(clientId)
     const clientRepo = AppDataSource.getRepository(Client)
     const client = await clientRepo.find({
         where: {
