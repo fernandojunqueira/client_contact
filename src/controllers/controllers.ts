@@ -7,6 +7,7 @@ import { retrieverClientService } from "../services/client/retrieverClient.servi
 import { listContactService } from "../services/contact/listContact.service"
 import { retrieverContactService } from "../services/contact/retrieverContact.service"
 import createSessionService from "../services/login/createSession.service"
+import { listContactsIdClientService } from "../services/client/listContactsIdClient.service"
 
 export const createClientController = async (req: Request, res: Response) => {
     const body:IClientRequest = req.body
@@ -47,4 +48,10 @@ export const createSessionController = async (req:Request,res:Response) => {
     const sessionData:IClientSession = req.body
     const token = await createSessionService(sessionData)
     return res.json({token})
+}
+
+export const listContactsIdClientController =async (req:Request,res:Response) => {
+    const contactId:string = req.params.id
+    const contacts = await listContactsIdClientService(contactId)
+    return res.status(200).json(contacts)
 }
