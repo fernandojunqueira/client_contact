@@ -1,6 +1,7 @@
 import { AppDataSource } from "../../data-source"
 import { Client } from "../../entities/client.entity"
 import { Contact } from "../../entities/contact.entity"
+import AppError from "../../errors/AppError"
 import { IContactRequest } from "../../interface"
 import { contactSchemaResponse } from "../../serializers/serializers"
 
@@ -9,12 +10,10 @@ const createContactService = async (payload:IContactRequest, clientId:string) =>
    const clientRepo = AppDataSource.getRepository(Client)
 
    const client = await clientRepo.findOneBy({id:clientId})
-   console.log(client)
-   //    const categoryVerify = await categoryRepo.findOneBy({name: payload.name})
    
-   //    if(categoryVerify){
-      //       throw new AppError("Category already exists", 409)
-      //   }
+   if(!client){
+         throw new AppError("Client does not exists", 404)
+      }
       
    let contactInstance = contactRepo.create(payload)
    

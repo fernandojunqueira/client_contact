@@ -1,5 +1,4 @@
 import { compare } from "bcryptjs"
-// import { AppError } from "../../errors"
 import jwt from "jsonwebtoken"
 import "dotenv/config"
 import { AppDataSource } from "../../data-source"

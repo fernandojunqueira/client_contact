@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source"
 import { Client } from "../../entities/client.entity"
 import AppError from "../../errors/AppError"
 import { IClientRequest } from "../../interface"
-import { clienteSchemaResponseCreate, clienteSchemaWithoutPassword } from "../../serializers/serializers"
+import { clienteSchemaResponseCreate } from "../../serializers/serializers"
 
 const createClientService = async (payload:IClientRequest) => {
    const clientRepo = AppDataSource.getRepository(Client)
