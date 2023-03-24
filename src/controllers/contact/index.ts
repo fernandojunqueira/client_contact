@@ -29,12 +29,14 @@ export const retrieverContactController =async (req:Request,res:Response) => {
 export const updateContactController =async (req:Request,res:Response) => {
     const contactId:string = req.params.id
     const dataToBeUpdated:IContactUpdate = req.body
-    const contacts = await updateContactService(contactId, dataToBeUpdated)
+    const {uuid} = req.client
+    const contacts = await updateContactService(contactId, dataToBeUpdated, uuid)
     return res.status(200).json(contacts)
 }
 
 export const deleteContactController =async (req:Request,res:Response) => {
     const contactId:string = req.params.id
-    const contacts = await deleteContactService(contactId)
+    const {uuid} = req.client
+    const contacts = await deleteContactService(contactId, uuid)
     return res.status(204).json(contacts)
 }

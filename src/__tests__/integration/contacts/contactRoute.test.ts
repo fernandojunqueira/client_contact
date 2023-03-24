@@ -139,19 +139,19 @@ describe("/contact", () => {
      
     })
 
-    // test("DELETE /contact/:id -  Should not be able to delete contact if it is not the owner",async () => {
-  
-    //     const loginResponse = await request(app).post("/login").send(mockedContactLogin);
-    //     const contactTobeDeleted = await request(app).get('/contact').set("Authorization", `Bearer ${loginResponse.body.token}`)
+    test("DELETE /contact/:id -  Should not be able to delete contact if it is not the owner",async () => {
+        await request(app).post('/client').send(mockedClient2)
+        const loginResponse = await request(app).post("/login").send(mockedClient2);
+        const contactTobeDeleted = await request(app).get('/contact').set("Authorization", `Bearer ${loginResponse.body.token}`)
 
-    //     const response = await request(app).delete(`/contact/${contactTobeDeleted.body[1].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+        const response = await request(app).delete(`/contact/${contactTobeDeleted.body[1].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
 
-    //     const contacts = await request(app).get('/contact').set("Authorization", `Bearer ${loginResponse.body.token}`)
+        const contacts = await request(app).get('/contact').set("Authorization", `Bearer ${loginResponse.body.token}`)
 
-    //     expect(response.status).toBe(403)
-    //     expect(contacts.body).toHaveLength(2)
+        expect(response.status).toBe(403)
+        expect(contacts.body).toHaveLength(2)
      
-    // })
+    })
 
     test("DELETE /contact/:id -  Must be able to delete contact",async () => {
   
@@ -188,22 +188,21 @@ describe("/contact", () => {
         expect(response.status).toBe(404)
     })
 
-    // test("PATCH /contact/:id - should not be able to update another contact", async () => {
-    //     await request(app).post('/contact').send(mockedContact)
-    //     const newValues = {email: "updatedcontact@mail.com"}
+    test("PATCH /contact/:id - should not be able to update another contact", async () => {
+        const newValues = {email: "updatedcontact@mail.com"}
 
-    //     const loginResponse = await request(app).post("/login").send(mockedContactLogin2);
-    //     const token = `Bearer ${loginResponse.body.token}`
+        const loginResponse = await request(app).post("/login").send(mockedClient2);
+        const token = `Bearer ${loginResponse.body.token}`
         
-    //     const contactTobeUpdateRequest = await request(app).get("/contact").set("Authorization", token)
+        const contactTobeUpdateRequest = await request(app).get("/contact").set("Authorization", token)
+        console.log(contactTobeUpdateRequest)
+        const contactTobeUpdateId = contactTobeUpdateRequest.body[0].id
 
-    //     const contactTobeUpdateId = contactTobeUpdateRequest.body[1].id
+        const response = await request(app).patch(`/contact/${contactTobeUpdateId}`).set("Authorization",token).send(newValues)
 
-    //     const response = await request(app).patch(`/contact/${contactTobeUpdateId}`).set("Authorization",token).send(newValues)
-
-    //     expect(response.body).toHaveProperty("message")
-    //     expect(response.status).toBe(403)
-    // })
+        expect(response.body).toHaveProperty("message")
+        expect(response.status).toBe(403)
+    })
 
     test("PATCH /contact/:id - should be able to update the contact", async () => {
 
