@@ -25,6 +25,13 @@ export const mockedContact : IContactRequest = {
     email: "contact@mail.com"
 }
 
+export const mockedContact2 : IContactRequest = {
+    firstName: "contact2",
+    lastName: "example",
+    phone: "48999999999",
+    email: "contact2@mail.com"
+}
+
 export const mockedLogin : IClientSession = {
     email: "client@mail.com",
     password: "1234"
@@ -32,5 +39,15 @@ export const mockedLogin : IClientSession = {
 
 export const mockedLogin2 : IClientSession = {
     email: "client2@mail.com",
+    password: "1234"
+}
+
+export const mockedContactLogin : IClientSession = {
+    email: "contact@mail.com",
+    password: "1234"
+}
+
+export const mockedContactLogin2 : IClientSession = {
+    email: "contact2@mail.com",
     password: "1234"
 }

@@ -17,7 +17,7 @@ const createContactService = async (payload:IContactRequest, clientId:string):Pr
       }
    
    if(contactVerify){
-         throw new AppError("Contact already exists", 404)
+         throw new AppError("Contact already exists", 409)
       }
       
    let contactInstance = contactRepo.create(payload)

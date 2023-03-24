@@ -108,11 +108,11 @@ describe("/client", () => {
     test("DELETE /client/:id -  Should not be able to delete client if it is not the owner",async () => {
   
         const loginResponse = await request(app).post("/login").send(mockedLogin);
-        const UserTobeDeleted = await request(app).get('/client').set("Authorization", `Bearer ${loginResponse.body.token}`)
+        const clientTobeDeleted = await request(app).get('/client').set("Authorization", `Bearer ${loginResponse.body.token}`)
 
-        const response = await request(app).delete(`/client/${UserTobeDeleted.body[1].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
-        console.log(response.status, "Status")
-        const clients = await request(app).get('/client/').set("Authorization", `Bearer ${loginResponse.body.token}`)
+        const response = await request(app).delete(`/client/${clientTobeDeleted.body[1].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+ 
+        const clients = await request(app).get('/client').set("Authorization", `Bearer ${loginResponse.body.token}`)
 
         expect(response.status).toBe(403)
         expect(clients.body).toHaveLength(2)
@@ -122,10 +122,10 @@ describe("/client", () => {
     test("DELETE /client/:id -  Must be able to delete client",async () => {
   
         const loginResponse = await request(app).post("/login").send(mockedLogin);
-        const UserTobeDeleted = await request(app).get('/client').set("Authorization", `Bearer ${loginResponse.body.token}`)
+        const clientTobeDeleted = await request(app).get('/client').set("Authorization", `Bearer ${loginResponse.body.token}`)
 
-        const response = await request(app).delete(`/client/${UserTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
-        const clients = await request(app).get('/client/').set("Authorization", `Bearer ${loginResponse.body.token}`)
+        const response = await request(app).delete(`/client/${clientTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+        const clients = await request(app).get('/client').set("Authorization", `Bearer ${loginResponse.body.token}`)
 
         expect(response.status).toBe(204)
         expect(clients.body).toHaveLength(1)
@@ -133,8 +133,8 @@ describe("/client", () => {
     })
 
     test("PATCH /client/:id -  should not be able to update the client without authentication",async () => {
-        const adminLoginResponse = await request(app).post("/login").send(mockedLogin2);
-        const userTobeUpdate = await request(app).get('/client').set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+        const loginResponse = await request(app).post("/login").send(mockedLogin2);
+        const userTobeUpdate = await request(app).get('/client').set("Authorization", `Bearer ${loginResponse.body.token}`)
         const response = await request(app).patch(`/client/${userTobeUpdate.body[0].id}`)
 
         expect(response.body).toHaveProperty("message")
@@ -143,10 +143,10 @@ describe("/client", () => {
     })
 
     test("PATCH /client/:id - should not be able to update the client with invalid id",async () => {
-        const newValues = {email: "joanabrito@mail.com"}
+        const newValues = {email: "updatedClient@mail.com"}
 
-        const admingLoginResponse = await request(app).post("/login").send(mockedLogin2);
-        const token = `Bearer ${admingLoginResponse.body.token}`
+        const loginResponse = await request(app).post("/login").send(mockedLogin2);
+        const token = `Bearer ${loginResponse.body.token}`
         
         const response = await request(app).patch(`/client/13970660-5dbe-423a-9a9d-5c23b37943cf`).set("Authorization",token).send(newValues)
 
@@ -156,7 +156,7 @@ describe("/client", () => {
 
     test("PATCH /client/:id - should not be able to update another client", async () => {
         await request(app).post('/client').send(mockedClient)
-        const newValues = {email: "newclient@mail.com"}
+        const newValues = {email: "updatedClient@mail.com"}
 
         const loginResponse = await request(app).post("/login").send(mockedLogin2);
         const token = `Bearer ${loginResponse.body.token}`
@@ -173,7 +173,7 @@ describe("/client", () => {
 
     test("PATCH /client/:id - should be able to update the client", async () => {
 
-        const newValues = {email: "newclient@mail.com"}
+        const newValues = {email: "updatedClient@mail.com"}
 
         const loginResponse = await request(app).post("/login").send(mockedLogin);
         const token = `Bearer ${loginResponse.body.token}`
@@ -184,7 +184,7 @@ describe("/client", () => {
 
         const response = await request(app).patch(`/client/${clientTobeUpdateId}`).set("Authorization",token).send(newValues)
 
-        expect(response.body.email).toEqual("newclient@mail.com")
+        expect(response.body.email).toEqual("updatedClient@mail.com")
         expect(response.status).toBe(200)
     })
 
