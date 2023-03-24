@@ -1,0 +1,679 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API projeto full-stack cliente-contatos",
+        "description": "Esse API tem como objeto de fazer o backend da aplicação do cliente-contatos",
+        "termsOfService": "",
+        "contact": {
+            "email": "fernandojunqueira12@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "API de desenvolvimento"
+        },
+        {
+            "url": "https://complete-sua-banda.onrender.com",
+            "description": "API de produção"
+        }
+    ],
+    "paths":{
+        "/login": {
+            "post": {
+                "summary": "Responsável por fazer o login",
+                "description": "Essa rota é responsável por logar na aplicação",
+                "tags": ["Login"],
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/login"
+                            },
+                            "examples": {
+                                "clientOne": {
+                                    "value": {
+                                        "email":"fernando@mail.com",
+                                        "password":"1234"
+                                    }
+                                },
+                                "clientTwo": {
+                                    "value": {
+                                        "email":"gustavo@mail.com",
+                                        "password":"1234"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "403": {
+                        "description": "Wrong email/password!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/loginResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/client": {
+            "post": {
+                "summary": "Criação de um novo cliente",
+                "description": "Essa rota é responsável pela criação de um novo cliente",
+                "tags": ["Client"],
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/clientRequest"
+                            },
+                            "examples":{
+                                "clientOne": {
+                                    "value": {
+                                        "firstName":"Fernando",
+                                        "lastName":"Junqueira",
+                                        "phone":"48 987455125",
+                                        "email":"fernando@mail.com",
+                                        "password":"1234"
+                                    }
+                                },
+                                "clientTwo": {
+                                    "value": {
+                                        "firstName":"Gustavo",
+                                        "lastName":"Lima",
+                                        "phone":"48 987455125",
+                                        "email":"gustavo@mail.com",
+                                        "password":"1234"
+                                    }
+                                } 
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "409": {
+                        "description": "Email already registered!"
+                    },
+                    "201": {
+                        "description": "Create",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/clientResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Lista todos os clientes com seus respectivos contatos",
+                "description": "Essa rota é responsável pela listagem de todos os cliente",
+                "tags": ["Client"],
+                "security": [{"bearerAuth": []}],
+                "responses": {
+                    "401": {
+                        "description": "Missing authorization headers"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items":{
+                                        "$ref": "#/components/schemas/clientResponseGet"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/client/{clientId}": {
+            "patch": {
+                "summary": "Atualização de um cliente",
+                "description": "Essa rota é responsável pela atualização de um cliente",
+                "tags": ["Client"],
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "description": "ID do client",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/clientRequest"
+                            },
+                            "examples":{
+                                "clientOne": {
+                                    "value": {
+                                        "firstName":"Fernando",
+                                        "lastName":"Junqueira",
+                                        "phone":"48 987455125",
+                                        "email":"fernando@mail.com",
+                                        "password":"1234"
+                                    }
+                                },
+                                "clientTwo": {
+                                    "value": {
+                                        "firstName":"Gustavo",
+                                        "lastName":"Lima",
+                                        "phone":"48 987455125",
+                                        "email":"gustavo@mail.com",
+                                        "password":"1234"
+                                    }
+                                } 
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Missing authorization headers / Invalid token"
+                    },
+                    "403": {
+                        "description": "Missing permission"
+                    },
+                    "404": {
+                        "description": "Client does not exists"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/clientResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Lista o clientes com seus respectivos contatos",
+                "description": "Essa rota é responsável por listar um cliente pelo id",
+                "tags": ["Client"],
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "description": "ID do client",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Missing authorization headers / Invalid token"
+                    },
+                    "403": {
+                        "description": "Missing permission"
+                    },
+                    "404": {
+                        "description": "Client does not exists"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref": "#/components/schemas/clientResponseGet"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta o clientes com seus respectivos contatos",
+                "description": "Essa rota é responsável pela deleção do cliente",
+                "tags": ["Client"],
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "description": "ID do client",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Missing authorization headers / Invalid token"
+                    },
+                    "403": {
+                        "description": "Missing permission"
+                    },
+                    "404": {
+                        "description": "Client does not exists"
+                    },
+                    "204": {
+                        "description": "No content"
+                    }
+                }
+            }
+        },
+        "/contact": {
+            "get": {
+                "summary": "Listagem de um contato",
+                "description": "Essa rota é responsável pela listagem de um contato",
+                "tags": ["contact"],
+                "security": [{"bearerAuth": []}],
+                "responses": {
+                    "401": {
+                        "description": "Missing authorization headers / Invalid token"
+                    },
+                    "403": {
+                        "description": "Missing permission"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/contactResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contact/{contactId}": {
+            "patch": {
+                "summary": "Atualização de um contacte",
+                "description": "Essa rota é responsável pela atualização de um contacte",
+                "tags": ["contact"],
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "name": "contactId",
+                        "in": "path",
+                        "description": "ID do contact",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/contactRequest"
+                            },
+                            "examples":{
+                                "contactOne": {
+                                    "value": {
+                                        "firstName":"Fernando",
+                                        "lastName":"Junqueira",
+                                        "phone":"48 987455125",
+                                        "email":"fernando@mail.com",
+                                        "password":"1234"
+                                    }
+                                },
+                                "contactTwo": {
+                                    "value": {
+                                        "firstName":"Gustavo",
+                                        "lastName":"Lima",
+                                        "phone":"48 987455125",
+                                        "email":"gustavo@mail.com",
+                                        "password":"1234"
+                                    }
+                                } 
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Missing authorization headers / Invalid token"
+                    },
+                    "403": {
+                        "description": "Missing permission"
+                    },
+                    "404": {
+                        "description": "contact does not exists"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/contactResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Lista o contactes com seus respectivos contatos",
+                "description": "Essa rota é responsável por listar um contacte pelo id",
+                "tags": ["contact"],
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "name": "contactId",
+                        "in": "path",
+                        "description": "ID do contact",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Missing authorization headers / Invalid token"
+                    },
+                    "403": {
+                        "description": "Missing permission"
+                    },
+                    "404": {
+                        "description": "contact does not exists"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref": "#/components/schemas/contactResponseGet"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta o contactes com seus respectivos contatos",
+                "description": "Essa rota é responsável pela deleção do contacte",
+                "tags": ["contact"],
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "name": "contactId",
+                        "in": "path",
+                        "description": "ID do contact",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Missing authorization headers / Invalid token"
+                    },
+                    "403": {
+                        "description": "Missing permission"
+                    },
+                    "404": {
+                        "description": "contact does not exists"
+                    },
+                    "204": {
+                        "description": "No content"
+                    }
+                }
+            }
+        },
+        "/contact/{clientId}": {
+            "post": {
+                "summary": "Criação de um novo cliente",
+                "description": "Essa rota é responsável pela criação de um novo cliente",
+                "tags": ["Client"],
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/clientRequest"
+                            },
+                            "examples":{
+                                "clientOne": {
+                                    "value": {
+                                        "firstName":"Fernando",
+                                        "lastName":"Junqueira",
+                                        "phone":"48 987455125",
+                                        "email":"fernando@mail.com",
+                                        "password":"1234"
+                                    }
+                                },
+                                "clientTwo": {
+                                    "value": {
+                                        "firstName":"Gustavo",
+                                        "lastName":"Lima",
+                                        "phone":"48 987455125",
+                                        "email":"gustavo@mail.com",
+                                        "password":"1234"
+                                    }
+                                } 
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "409": {
+                        "description": "Email already registered!"
+                    },
+                    "201": {
+                        "description": "Create",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/clientResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "login": {
+                "type":"object",
+                "properties": {
+                    "email": {
+                        "type":"string",
+                        "format":"email"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "loginResponse": {
+                "type":"object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                }
+            },
+            "clientRequest": {
+                "type":"object",
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type":"string",
+                        "format":"email"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "clientResponse": {
+                "type":"object",
+                "properties": {
+                    "registrationDate": {
+                        "type": "string",
+                        "format": "Date"
+                    },
+                    "email": {
+                        "type":"string",
+                        "format":"email"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                }
+            },
+            "clientResponseGet": {
+                "type":"object",
+                "properties": {
+                    "registrationDate": {
+                        "type": "string",
+                        "format": "Date"
+                    },
+                    "email": {
+                        "type":"string",
+                        "format":"email"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "contact": {
+                        "type":"array",
+                        "items": {
+                            "type":"object",
+                            "properties":{
+                                "registrationDate": {
+                                    "type": "string",
+                                    "format": "Date"
+                                },
+                                "email": {
+                                    "type":"string",
+                                    "format":"email"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "lastName": {
+                                    "type": "string"
+                                },
+                                "firstName": {
+                                    "type": "string"
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "contactRequest": {
+                "type":"object",
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type":"string",
+                        "format":"email"
+                    }
+                }
+            },
+            "contactResponse": {
+                "type":"object",
+                "properties": {
+                    "registrationDate": {
+                        "type": "string",
+                        "format": "Date"
+                    },
+                    "email": {
+                        "type":"string",
+                        "format":"email"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "Bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+    }
+    
