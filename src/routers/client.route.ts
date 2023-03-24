@@ -32,6 +32,7 @@ clientRoutes.patch(
 clientRoutes.delete(
     "/:id",
     inspectTokenMiddlewares,
+    verifyOwnerMiddlewares,
     deleteClientController
     )
 
