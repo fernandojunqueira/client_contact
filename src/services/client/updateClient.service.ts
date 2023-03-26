@@ -1,19 +1,18 @@
-import { AppDataSource } from "../../data-source"
-import { Client } from "../../entities/client.entity"
 import AppError from "../../errors/AppError"
 import { IClientResponseCreate } from "../../interface/client"
 import { IContactUpdate } from "../../interface/contact"
+import { clientRepository } from "../../repositories"
 import { clienteSchemaResponseCreate } from "../../serializers/serializers"
 
 export const updateClientService = async (clientId:string, dataToBeUpdated:IContactUpdate):Promise<IClientResponseCreate> => {
-    const clientRepo = AppDataSource.getRepository(Client)
-    const client = await clientRepo.findOneBy({id:clientId})
+
+    const client = await clientRepository.findOneBy({id:clientId})
 
     if(!client){
         throw new AppError("Client does not exists", 404)
      }
 
-    const updatedContact = await clientRepo.save({...client, ...dataToBeUpdated})
+    const updatedContact = await clientRepository.save({...client, ...dataToBeUpdated})
 
     const clientResponse = await clienteSchemaResponseCreate.validate(updatedContact,{stripUnknown:true})
 

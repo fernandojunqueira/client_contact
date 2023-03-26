@@ -1,11 +1,9 @@
-import { AppDataSource } from "../../data-source"
-import { Contact } from "../../entities/contact.entity"
 import AppError from "../../errors/AppError"
+import { contactRepository } from "../../repositories"
 
 export const deleteContactService = async (contactId:string, clientId:string):Promise<void> => {
-    const contactRepo = AppDataSource.getRepository(Contact)
-
-    const contact = await contactRepo.find({
+  
+    const contact = await contactRepository.find({
         relations:{
             client:true
         },
@@ -24,6 +22,6 @@ export const deleteContactService = async (contactId:string, clientId:string):Pr
         throw new AppError("Missing permission",403)
     }
 
-    await contactRepo.remove(contact!)
+    await contactRepository.remove(contact!)
 
 }

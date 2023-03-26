@@ -1,11 +1,10 @@
-import { AppDataSource } from "../../data-source"
-import { Contact } from "../../entities/contact.entity"
 import { IContactResponse } from "../../interface/contact"
+import { contactRepository } from "../../repositories"
 import { listContact } from "../../serializers/serializers"
 
 export const listContactService = async ():Promise<IContactResponse[] | undefined> => {
-    const contactRepo = AppDataSource.getRepository(Contact)
-    const contacts = await contactRepo.find()
+
+    const contacts = await contactRepository.find()
 
     const clientsResponse = await listContact.validate(contacts,{stripUnknown:true})
 

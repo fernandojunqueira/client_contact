@@ -1,11 +1,10 @@
-import { AppDataSource } from "../../data-source"
-import { Client } from "../../entities/client.entity"
 import { IClientResponse } from "../../interface/client"
+import { clientRepository } from "../../repositories"
 import { listClient } from "../../serializers/serializers"
 
 export const listClientService = async ():Promise<IClientResponse[] | undefined> => {
-    const clientRepo = AppDataSource.getRepository(Client)
-    const clients = await clientRepo.find({
+
+    const clients = await clientRepository.find({
         relations: {
             contacts:true
         }

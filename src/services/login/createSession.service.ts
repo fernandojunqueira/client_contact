@@ -1,14 +1,13 @@
 import { compare } from "bcryptjs"
 import jwt from "jsonwebtoken"
 import "dotenv/config"
-import { AppDataSource } from "../../data-source"
-import { Client } from "../../entities/client.entity"
 import AppError from "../../errors/AppError"
 import { IClientSession } from "../../interface/session"
+import { clientRepository } from "../../repositories"
 
 const createSessionService = async ({email,password}:IClientSession):Promise<string> => {
-    const clientRepo = AppDataSource.getRepository(Client)
-    const client = await clientRepo.findOneBy({email: email})
+
+    const client = await clientRepository.findOneBy({email: email})
     
     if(!client){
         throw new AppError('Wrong email/password', 403)

@@ -1,15 +1,14 @@
-import { AppDataSource } from "../../data-source"
-import { Client } from "../../entities/client.entity"
 import AppError from "../../errors/AppError"
+import { clientRepository } from "../../repositories"
 
 export const deleteClientService = async (contactId:string):Promise<void> => {
-    const clientRepo = AppDataSource.getRepository(Client)
-    const client = await clientRepo.findOneBy({id:contactId})
+
+    const client = await clientRepository.findOneBy({id:contactId})
 
     if(!client){
         throw new AppError("Client does not exists", 404)
     }
 
-    await clientRepo.remove(client!)
+    await clientRepository.remove(client!)
 
 }

@@ -1,13 +1,11 @@
-import { AppDataSource } from "../../data-source"
-import { Client } from "../../entities/client.entity"
 import AppError from "../../errors/AppError"
 import { IClientResponse } from "../../interface/client"
+import { clientRepository } from "../../repositories"
 import { clienteSchemaWithoutPassword } from "../../serializers/serializers"
 
 export const retrieverClientService = async (clientId:string):Promise<IClientResponse> => {
 
-    const clientRepo = AppDataSource.getRepository(Client)
-    const client = await clientRepo.find({
+    const client = await clientRepository.find({
         where: {
             id: clientId
         },

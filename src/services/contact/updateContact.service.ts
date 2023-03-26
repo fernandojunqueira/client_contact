@@ -1,12 +1,11 @@
-import { AppDataSource } from "../../data-source"
-import { Contact } from "../../entities/contact.entity"
 import AppError from "../../errors/AppError"
 import { IContactResponse, IContactUpdate } from "../../interface/contact"
+import { contactRepository } from "../../repositories"
 import { contactSchemaResponse } from "../../serializers/serializers"
 
 export const updateContactService = async (contactId:string, dataToBeUpdated:IContactUpdate, clientId:string):Promise<IContactResponse> => {
-    const contactRepo = AppDataSource.getRepository(Contact)
-    const contact = await contactRepo.find({
+
+    const contact = await contactRepository.find({
         relations:{
             client:true
         },
@@ -27,7 +26,7 @@ export const updateContactService = async (contactId:string, dataToBeUpdated:ICo
 
 
 
-    const updatedContact = await contactRepo.save({...dataContact, ...dataToBeUpdated})
+    const updatedContact = await contactRepository.save({...dataContact, ...dataToBeUpdated})
 
     const contactResponse = await contactSchemaResponse.validate(updatedContact,{stripUnknown:true})
 

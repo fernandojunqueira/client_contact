@@ -195,7 +195,7 @@ describe("/contact", () => {
         const token = `Bearer ${loginResponse.body.token}`
         
         const contactTobeUpdateRequest = await request(app).get("/contact").set("Authorization", token)
-        console.log(contactTobeUpdateRequest)
+
         const contactTobeUpdateId = contactTobeUpdateRequest.body[0].id
 
         const response = await request(app).patch(`/contact/${contactTobeUpdateId}`).set("Authorization",token).send(newValues)

@@ -1,16 +1,12 @@
-import { AppDataSource } from "../../data-source"
-import { Client } from "../../entities/client.entity"
-import { Contact } from "../../entities/contact.entity"
 import AppError from "../../errors/AppError"
 import { IContactRequest, IContactResponse } from "../../interface/contact"
+import { clientRepository, contactRepository } from "../../repositories"
 import { contactSchemaResponse } from "../../serializers/serializers"
 
 const createContactService = async (payload:IContactRequest, clientId:string):Promise<IContactResponse> => {
-   const contactRepo = AppDataSource.getRepository(Contact)
-   const clientRepo = AppDataSource.getRepository(Client)
 
-   const client = await clientRepo.findOneBy({id:clientId})
-   const contactVerify = await contactRepo.findOneBy({email:payload.email})
+   const client = await clientRepository.findOneBy({id:clientId})
+   const contactVerify = await contactRepository.findOneBy({email:payload.email})
    
    if(!client){
          throw new AppError("Client does not exists", 404)
@@ -20,9 +16,9 @@ const createContactService = async (payload:IContactRequest, clientId:string):Pr
          throw new AppError("Contact already exists", 409)
       }
       
-   let contactInstance = contactRepo.create(payload)
+   let contactInstance = contactRepository.create(payload)
    
-   const contact = await contactRepo.save({
+   const contact = await contactRepository.save({
       ...contactInstance,
       client: client!
    })
