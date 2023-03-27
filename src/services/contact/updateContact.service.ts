@@ -24,8 +24,6 @@ export const updateContactService = async (contactId:string, dataToBeUpdated:ICo
         throw new AppError("Missing permission",403)
     }
 
-
-
     const updatedContact = await contactRepository.save({...dataContact, ...dataToBeUpdated})
 
     const contactResponse = await contactSchemaResponse.validate(updatedContact,{stripUnknown:true})

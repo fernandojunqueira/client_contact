@@ -7,12 +7,12 @@ import { valueToLookFor } from "../../utils.ts"
 const createClientService = async (payload:IClientRequest):Promise<IClientResponseCreate> => {
   
 
- await valueToLookFor(clientRepository, "email", payload.email)
-//    const clientVerify = await clientRepository.findOneBy({email: payload.email})
+//  await valueToLookFor(clientRepository, "email", payload.email)
+   const clientVerify = await clientRepository.findOneBy({email: payload.email})
    
-//    if(clientVerify){
-//       throw new AppError("Email already registered", 409)
-//   }
+   if(clientVerify){
+      throw new AppError("Email already registered", 409)
+  }
 
    let client = clientRepository.create(payload)
   

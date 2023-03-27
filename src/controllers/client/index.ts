@@ -32,7 +32,7 @@ export const deleteClientController =async (req:Request,res:Response) => {
 
 export const updateClientController =async (req:Request,res:Response) => {
     const clientId:string = req.params.id
-    const dataToBeUpdated:IContactUpdate = req.body
+    const dataToBeUpdated:IClientRequest = req.body
     const contacts = await updateClientService(clientId, dataToBeUpdated)
     return res.status(200).json(contacts)
 }

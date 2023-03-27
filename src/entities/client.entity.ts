@@ -1,5 +1,5 @@
-import { hashSync } from "bcryptjs";
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn ,BeforeInsert, OneToMany } from "typeorm";
+import { getRounds, hashSync } from "bcryptjs";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn ,BeforeInsert, OneToMany, BeforeUpdate } from "typeorm";
 import { Contact } from "./contact.entity";
 
 @Entity("client")
@@ -26,8 +26,11 @@ export class Client {
     registrationDate: Date
     
     @BeforeInsert()
+    @BeforeUpdate()
     hashPassword(){
-        this.password = hashSync(this.password, 10)
+        const isEncrypted = getRounds(this.password);
+
+        if (!isEncrypted) this.password = hashSync(this.password, 10);
     }
 
     @OneToMany(() => Contact, (contact) => contact.client, {onDelete:"CASCADE"})

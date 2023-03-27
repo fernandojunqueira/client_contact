@@ -22,8 +22,8 @@
     "paths":{
         "/login": {
             "post": {
-                "summary": "Responsável por fazer o login",
-                "description": "Essa rota é responsável por logar na aplicação",
+                "summary": "Responsável por fazer o login e gerar",
+                "description": "Essa rota é responsável por logar na aplicação e gerar o token que será usado na autorização das rotas",
                 "tags": ["Login"],
                 "requestBody": {
                     "content": {
@@ -69,7 +69,7 @@
         "/client": {
             "post": {
                 "summary": "Criação de um novo cliente",
-                "description": "Essa rota é responsável pela criação de um novo cliente",
+                "description": "Essa rota é responsável pela criação de um novo cliente e com email e senha dessa criação que você fará o login.",
                 "tags": ["Client"],
                 "requestBody": {
                     "content": {
@@ -119,7 +119,6 @@
             },
             "get": {
                 "summary": "Lista todos os clientes com seus respectivos contatos",
-                "description": "Essa rota é responsável pela listagem de todos os cliente",
                 "tags": ["Client"],
                 "security": [{"bearerAuth": []}],
                 "responses": {
@@ -145,7 +144,7 @@
         "/client/{clientId}": {
             "patch": {
                 "summary": "Atualização de um cliente",
-                "description": "Essa rota é responsável pela atualização de um cliente",
+                "description": "É possível atualizar de um até todos os atributos.",
                 "tags": ["Client"],
                 "security": [{"bearerAuth": []}],
                 "parameters": [
@@ -168,7 +167,7 @@
                                 "clientOne": {
                                     "value": {
                                         "firstName":"Fernando",
-                                        "lastName":"Junqueira",
+                                        "lastName":"Lima",
                                         "phone":"48 987455125",
                                         "email":"fernando@mail.com",
                                         "password":"1234"
@@ -250,7 +249,7 @@
             },
             "delete": {
                 "summary": "Deleta o clientes com seus respectivos contatos",
-                "description": "Essa rota é responsável pela deleção do cliente",
+                "description": "Só é possível deletar caso você seja o próprio cliente.",
                 "tags": ["Client"],
                 "security": [{"bearerAuth": []}],
                 "parameters": [
@@ -281,8 +280,8 @@
         },
         "/contact": {
             "get": {
-                "summary": "Listagem de um contato",
-                "description": "Essa rota é responsável pela listagem de um contato",
+                "summary": "Listagem dos contato",
+                "description": "Essa rota é responsável pela listagem dos contato",
                 "tags": ["contact"],
                 "security": [{"bearerAuth": []}],
                 "responses": {
@@ -310,8 +309,8 @@
         },
         "/contact/{contactId}": {
             "patch": {
-                "summary": "Atualização de um contacte",
-                "description": "Essa rota é responsável pela atualização de um contacte",
+                "summary": "Atualização de um contato",
+                "description": "Essa rota é responsável pela atualização de um contato",
                 "tags": ["contact"],
                 "security": [{"bearerAuth": []}],
                 "parameters": [
@@ -333,20 +332,18 @@
                             "examples":{
                                 "contactOne": {
                                     "value": {
-                                        "firstName":"Fernando",
-                                        "lastName":"Junqueira",
+                                        "firstName":"Angela",
+                                        "lastName":"Lima",
                                         "phone":"48 987455125",
-                                        "email":"fernando@mail.com",
-                                        "password":"1234"
+                                        "email":"angela@mail.com"
                                     }
                                 },
                                 "contactTwo": {
                                     "value": {
-                                        "firstName":"Gustavo",
-                                        "lastName":"Lima",
+                                        "firstName":"Adriano",
+                                        "lastName":"Luis",
                                         "phone":"48 987455125",
-                                        "email":"gustavo@mail.com",
-                                        "password":"1234"
+                                        "email":"adriano@mail.com"
                                     }
                                 } 
                             }
@@ -377,8 +374,8 @@
                 }
             },
             "get": {
-                "summary": "Lista o contactes com seus respectivos contatos",
-                "description": "Essa rota é responsável por listar um contacte pelo id",
+                "summary": "Faz a listagem de um contato",
+                "description": "Essa rota é responsável por listar um contato usando seu id",
                 "tags": ["contact"],
                 "security": [{"bearerAuth": []}],
                 "parameters": [
@@ -415,8 +412,8 @@
                 }
             },
             "delete": {
-                "summary": "Deleta o contactes com seus respectivos contatos",
-                "description": "Essa rota é responsável pela deleção do contacte",
+                "summary": "Deleta o conbtato",
+                "description": "Só é possível deletar caso você seja o cliente relacionado a esse contato.",
                 "tags": ["contact"],
                 "security": [{"bearerAuth": []}],
                 "parameters": [
@@ -447,32 +444,41 @@
         },
         "/contact/{clientId}": {
             "post": {
-                "summary": "Criação de um novo cliente",
-                "description": "Essa rota é responsável pela criação de um novo cliente",
-                "tags": ["Client"],
+                "summary": "Criação de um novo contato com um relacionamento com cliente",
+                "description": "Essa rota é responsável pela criação de um novo contato",
+                "tags": ["contact"],
+                "security": [{"bearerAuth": []}],
+                "parameters": [
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "description": "ID do client",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json":{
                             "schema":{
-                                "$ref":"#/components/schemas/clientRequest"
+                                "$ref":"#/components/schemas/contactRequest"
                             },
                             "examples":{
                                 "clientOne": {
                                     "value": {
-                                        "firstName":"Fernando",
+                                        "firstName":"Angela",
                                         "lastName":"Junqueira",
                                         "phone":"48 987455125",
-                                        "email":"fernando@mail.com",
-                                        "password":"1234"
+                                        "email":"angela@mail.com"
                                     }
                                 },
                                 "clientTwo": {
                                     "value": {
-                                        "firstName":"Gustavo",
+                                        "firstName":"Adriano",
                                         "lastName":"Lima",
                                         "phone":"48 987455125",
-                                        "email":"gustavo@mail.com",
-                                        "password":"1234"
+                                        "email":"adriano@mail.com"
                                     }
                                 } 
                             }
