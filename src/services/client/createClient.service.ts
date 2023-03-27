@@ -2,12 +2,9 @@ import AppError from "../../errors/AppError"
 import { IClientRequest, IClientResponseCreate } from "../../interface/client"
 import { clientRepository } from "../../repositories"
 import { clienteSchemaResponseCreate } from "../../serializers/serializers"
-import { valueToLookFor } from "../../utils.ts"
 
 const createClientService = async (payload:IClientRequest):Promise<IClientResponseCreate> => {
   
-
-//  await valueToLookFor(clientRepository, "email", payload.email)
    const clientVerify = await clientRepository.findOneBy({email: payload.email})
    
    if(clientVerify){
