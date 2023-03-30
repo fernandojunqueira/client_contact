@@ -4,6 +4,8 @@
 
 O back end foi desenvolvido em nodeJs e typescript. O Client_contact back end faz parte de um projeto full stack onde a intenção é que seja possível criar um cliente e esse cliente consiga adicionar quantos contatos ele quiser. Isso com rotas protegidas, um login para autenticação e um CRUD completo tanto de clientes quanto de contatos.
 
+A documentação se encontra no seguinte link: (https://client-contact.onrender.com/api-docs/#/)
+
 ## Instalação
 
 Para inciar este projeto, é necessário instalar as dependências, que serão utilizadas nos testes. Portanto utilize o comando abaixo para instalar tais dependências:
