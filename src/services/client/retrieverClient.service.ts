@@ -4,7 +4,7 @@ import { clientRepository } from "../../repositories"
 import { clienteSchemaWithoutPassword } from "../../serializers/serializers"
 
 export const retrieverClientService = async (clientId:string):Promise<IClientResponse> => {
-
+ 
     const client = await clientRepository.find({
         where: {
             id: clientId

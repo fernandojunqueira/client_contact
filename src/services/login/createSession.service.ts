@@ -2,10 +2,10 @@ import { compare } from "bcryptjs"
 import jwt from "jsonwebtoken"
 import "dotenv/config"
 import AppError from "../../errors/AppError"
-import { IClientSession } from "../../interface/session"
+import { IClientSession, iLoginResponse } from "../../interface/session"
 import { clientRepository } from "../../repositories"
 
-const createSessionService = async ({email,password}:IClientSession):Promise<string> => {
+const createSessionService = async ({email,password}:IClientSession):Promise<iLoginResponse> => {
 
     const client = await clientRepository.findOneBy({email: email})
     
@@ -28,7 +28,7 @@ const createSessionService = async ({email,password}:IClientSession):Promise<str
         }
     )
 
-    return token
+    return {token:token, id:client.id}
     
 }
 
