@@ -1,21 +1,21 @@
 import { Request, Response ,NextFunction } from "express";
-import { AnySchema } from "yup"
+import { AnySchema } from "yup";
 
 const ensureDataIsValidMiddleware = (schema: AnySchema) => async (req:Request, res: Response, next: NextFunction) => {
-    try {
-        
-        const validatedDate = await schema.validate(req.body,{
-            abortEarly: false,
-            stripUnknown: true
-        })
+  try {
 
-        req.body = validatedDate
+    const validatedDate = await schema.validate(req.body,{
+      abortEarly: false,
+      stripUnknown: true
+    });
 
-        return next()
+    req.body = validatedDate;
 
-    } catch (error:any) {
-        return res.status(400).json({error: error.errors})
-    }
-}
+    return next();
 
-export default ensureDataIsValidMiddleware
+  } catch (error:any) {
+    return res.status(400).json({error: error.errors});
+  }
+};
+
+export default ensureDataIsValidMiddleware;

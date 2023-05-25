@@ -5,35 +5,35 @@ import { clientSchema } from "../serializers/serializers";
 import { inspectTokenMiddlewares } from "../middlewares/inspectToken";
 import { verifyOwnerMiddlewares } from "../middlewares/verifyOwner";
 
-const clientRoutes = Router()
+const clientRoutes = Router();
 
 clientRoutes.post(
-    "",
-    ensureDataIsValidMiddleware(clientSchema),
-    createClientController
-    )
+  "",
+  ensureDataIsValidMiddleware(clientSchema),
+  createClientController
+);
 clientRoutes.get(
-    "",
-    inspectTokenMiddlewares,
-    listClientController
-    )
+  "",
+  inspectTokenMiddlewares,
+  listClientController
+);
 clientRoutes.get(
-    "/:id",
-    inspectTokenMiddlewares,
-    verifyOwnerMiddlewares,
-    retrieverClientController
-    )
+  "/:id",
+  inspectTokenMiddlewares,
+  verifyOwnerMiddlewares,
+  retrieverClientController
+);
 clientRoutes.patch(
-    "/:id",
-    inspectTokenMiddlewares,
-    verifyOwnerMiddlewares,
-    updateClientController
-    )
+  "/:id",
+  inspectTokenMiddlewares,
+  verifyOwnerMiddlewares,
+  updateClientController
+);
 clientRoutes.delete(
-    "/:id",
-    inspectTokenMiddlewares,
-    verifyOwnerMiddlewares,
-    deleteClientController
-    )
+  "/:id",
+  inspectTokenMiddlewares,
+  verifyOwnerMiddlewares,
+  deleteClientController
+);
 
-export default clientRoutes
+export default clientRoutes;

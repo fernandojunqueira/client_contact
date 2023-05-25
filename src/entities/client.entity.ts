@@ -5,34 +5,34 @@ import { Contact } from "./contact.entity";
 @Entity("client")
 export class Client {
     @PrimaryGeneratedColumn("uuid")
-    id:string
+      id:string;
 
     @Column()
-    firstName: string
+      firstName: string;
 
     @Column()
-    lastName: string
+      lastName: string;
 
     @Column()
-    phone: string
+      phone: string;
 
     @Column()
-    email: string
+      email: string;
 
     @Column()
-    password: string
-    
+      password: string;
+
     @CreateDateColumn()
-    registrationDate: Date
-    
+      registrationDate: Date;
+
     @BeforeInsert()
     @BeforeUpdate()
     hashPassword(){
-        const isEncrypted = getRounds(this.password);
+      const isEncrypted = getRounds(this.password);
 
-        if (!isEncrypted) this.password = hashSync(this.password, 10);
+      if (!isEncrypted) this.password = hashSync(this.password, 10);
     }
 
     @OneToMany(() => Contact, (contact) => contact.client, {onDelete:"CASCADE"})
-    contacts : Contact[]
+      contacts : Contact[];
 }

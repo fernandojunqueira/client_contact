@@ -6,6 +6,10 @@ O back end foi desenvolvido em nodeJs e typescript. O Client_contact back end fa
 
 A documentação se encontra no seguinte link: https://client-contact.onrender.com/api-docs/#/
 
+A página do front end se encontra no seguinte link:
+
+o Repositório do front end dessa aplicação se encontra no seguinte link: ("https://github.com/fernandojunqueira/client_contact")
+
 ## Instalação
 
 Para inciar este projeto, é necessário instalar as dependências, que serão utilizadas nos testes. Portanto utilize o comando abaixo para instalar tais dependências:

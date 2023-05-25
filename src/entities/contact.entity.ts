@@ -5,24 +5,24 @@ import { Client } from "./client.entity";
 export class Contact{
 
     @PrimaryGeneratedColumn("uuid")
-    id:string
+      id:string;
 
     @Column()
-    firstName: string
+      firstName: string;
 
     @Column()
-    lastName: string
+      lastName: string;
 
     @Column()
-    phone: string
+      phone: string;
 
     @Column()
-    email: string
+      email: string;
     
     @CreateDateColumn()
-    registrationDate: Date
+      registrationDate: Date;
 
     @ManyToOne(() => Client, (client) => client.contacts,{onDelete:"CASCADE"})
-    client: Client
+      client: Client;
 
 }
